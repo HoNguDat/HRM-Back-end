@@ -1,0 +1,17 @@
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.csproj.AssemblyReference.cache
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.AssemblyInfoInputs.cache
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.AssemblyInfo.cs
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.csproj.CoreCompileInputs.cache
+D:\HRM-Back-end\HRM-API\HRM-Service\bin\Debug\net7.0\HRM-Service.deps.json
+D:\HRM-Back-end\HRM-API\HRM-Service\bin\Debug\net7.0\HRM-Service.runtimeconfig.json
+D:\HRM-Back-end\HRM-API\HRM-Service\bin\Debug\net7.0\HRM-Service.dll
+D:\HRM-Back-end\HRM-API\HRM-Service\bin\Debug\net7.0\HRM-Service.pdb
+D:\HRM-Back-end\HRM-API\HRM-Service\bin\Debug\net7.0\HRM-Common.dll
+D:\HRM-Back-end\HRM-API\HRM-Service\bin\Debug\net7.0\HRM-Common.pdb
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.csproj.CopyComplete
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.dll
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\refint\HRM-Service.dll
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.pdb
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\HRM-Service.genruntimeconfig.cache
+D:\HRM-Back-end\HRM-API\HRM-Service\obj\Debug\net7.0\ref\HRM-Service.dll
