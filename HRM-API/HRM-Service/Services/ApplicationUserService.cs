@@ -11,6 +11,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 
 namespace HRM_Service.Services
@@ -21,6 +23,8 @@ namespace HRM_Service.Services
         Task<ApplicationUser> UpdateApplicationUser(string id, ApplicationUser applicationUser);
         Task<ApplicationUser> GetApplicationUserByFullName(string name);
         Task<ApplicationUser> GetApplicationUserById(string id);
+        Task<PagedResult<ApplicationUser>> GetApplicationUserByStatus(GetApplicationUserModule req);
+
         void DeleteApplicationUser(string id);
         Task<PagedResult<ApplicationUser>> GetAllPaging(GetApplicationUserModule req);
 
@@ -85,6 +89,37 @@ namespace HRM_Service.Services
         {
             var applicationUser = await _context.ApplicationUsers.Include(p => p.Department).Include(p => p.Position).Include(p => p.Absences).Include(p => p.Payrolls).Include(p => p.CheckInRecords).AsQueryable().FirstOrDefaultAsync(p => p.Id == id);
             return applicationUser;
+        }
+        public async Task<PagedResult<ApplicationUser>> GetApplicationUserByStatus(GetApplicationUserModule req)
+        {
+            EmployeeStatus? employeeStatus = Enum.TryParse<EmployeeStatus>(req.Keyword, out var result)
+            ? result
+            : (EmployeeStatus?)null;
+            var query = _context.ApplicationUsers.Include(p => p.Department).Include(p => p.Position).Include(p => p.Absences).Include(p => p.Payrolls).Include(p => p.CheckInRecords).AsQueryable();
+            if (!string.IsNullOrEmpty(req.Keyword))
+            {
+                query = query.Where(s => s.EmployeeStatus == employeeStatus);
+            }
+            if (req.Direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderBy(s => s.EmployeeNumber); // Sắp xếp tăng dần
+            }
+            else if (req.Direction.Equals("desc", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderByDescending(s => s.EmployeeNumber); // Sắp xếp giảm dần
+            }
+            var skip = (req.Page - 1) * req.PageSize;
+            int total = query.Count();
+
+            var results = query.Skip(skip).Take(req.PageSize).ToList();
+
+            var data = new PagedResult<ApplicationUser>
+            {
+                Results = results,
+                Total = total
+            };
+
+            return data;
         }
 
 

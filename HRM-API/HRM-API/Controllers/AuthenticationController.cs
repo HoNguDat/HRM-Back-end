@@ -3,6 +3,7 @@ using HRM_Common.Models.Response;
 using HRM_Common.Models.ViewModels.Authenticate;
 using HRM_Service.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace hrm_api.Controllers
     {
         private readonly IAuthService _authService;
         private readonly ILogger<AuthenticationController> _logger;
-        public AuthenticationController(IAuthService authService, ILogger<AuthenticationController> logger)
+        public AuthenticationController(IAuthService authService, ILogger<AuthenticationController> logger, UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
             _logger = logger;
@@ -68,10 +69,17 @@ namespace hrm_api.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest("Invalid payload");
+                    return BadRequest("Invalid payload!");
+                if (!await _authService.IsUserNameUniqueAsync(model.UserName))
+                {
+                    return BadRequest("User already exists!");
+                }
+                if (!await _authService.IsUserEmailUniqueAsync(model.Email))
+                {
+                    return BadRequest("Email already exists!");
+                }
                 var data = await _authService.Registeration(model, model.role.ToString());
-                var result = new ApplicationUserRes(data);
-                return Ok(result);
+                return Ok(new { Message = "Add success!", Data = new ApplicationUserRes(data) });
             }
             catch (Exception ex)
             {
