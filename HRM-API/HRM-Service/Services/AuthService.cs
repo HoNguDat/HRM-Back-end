@@ -23,6 +23,9 @@ namespace HRM_Service.Services
         Task<TokenViewModel> Login(LoginModel model);
         Task<TokenViewModel> GetRefreshToken(GetRefreshTokenViewModel model);
         Task<bool> LogoutAsync(string userId);
+        Task<bool> IsUserNameUniqueAsync(string userName);
+        Task<bool> IsUserEmailUniqueAsync(string userName);
+
     }
     public class AuthService : IAuthService
     {
@@ -39,15 +42,19 @@ namespace HRM_Service.Services
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
+
+        public async Task<bool> IsUserNameUniqueAsync(string userName)
+        {
+            var userExists = await userManager.FindByNameAsync(userName);
+            return userExists == null;
+        }
+        public async Task<bool> IsUserEmailUniqueAsync(string email)
+        {
+            var userExists = await userManager.FindByEmailAsync(email);
+            return userExists == null;
+        }
         public async Task<ApplicationUser> Registeration(ApplicationUser model, string role)
         {
-            var a = 0;
-            var userExists = await userManager.FindByNameAsync(model.UserName);
-            if (userExists != null)
-            {
-                throw new("User already exists");
-
-            }
             Position? position = null;
             Department? department = null;
             if (model.PositionId != null)
@@ -113,8 +120,6 @@ namespace HRM_Service.Services
                     innerException = innerException.InnerException;
                 }
             }
-
-
             return user;
         }
         private string UploadedFile(ApplicationUser model)

@@ -184,3 +184,4 @@ D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\refint\HRM-API.dll
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.pdb
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.genruntimeconfig.cache
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\ref\HRM-API.dll
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.staticwebassets.runtime.json

@@ -6,6 +6,8 @@ using HRM_Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+
 namespace hrm_api.Controllers
 {
     [ApiController]
@@ -14,10 +16,13 @@ namespace hrm_api.Controllers
     public class ApplicationUserController : ControllerBase
     {
         private readonly IApplicationUserService applicationUserService;
+        private readonly ILogger<ApplicationUserController> _logger;
 
-        public ApplicationUserController(IApplicationUserService _applicationService)
+
+        public ApplicationUserController(IApplicationUserService _applicationService, ILogger<ApplicationUserController> logger)
         {
             applicationUserService = _applicationService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -40,16 +45,43 @@ namespace hrm_api.Controllers
                 Results = data.Results.Select(p => new ApplicationUserRes(p)).ToList(),
                 Total = data.Total
             };
-            return Ok(result);
+            return Ok(new { Message = "Get data success!", Data = result });
+        }
+
+        [HttpGet]
+        [Route("get-employee-status")]
+        public async Task<IActionResult> GetApplicationUserByStatus([FromQuery] GetApplicationUserModule req)
+        {
+            var data = await applicationUserService.GetApplicationUserByStatus(req);
+            var result = new PagedResult<ApplicationUserRes>
+            {
+                Results = data.Results.Select(p => new ApplicationUserRes(p)).ToList(),
+                Total = data.Total
+            };
+            return Ok(new { Message = "Get data success!", Data = result });
         }
 
         [HttpGet]
         [Route("get-employee/{id?}")]
-        public async Task<ApplicationUserRes> GetRecruitment(string id)
+        public async Task<IActionResult> GetApplicationUserById(string id)
+        
         {
-            var data = await applicationUserService.GetApplicationUserById(id);
-            var result = new ApplicationUserRes(data);
-            return result;
+            try
+            {
+                var data = await applicationUserService.GetApplicationUserById(id);
+
+                if (data == null)
+                {
+                    return NotFound( new { Message = "User does not exist!" });
+                }
+                var result = new ApplicationUserRes(data);
+                return Ok(new {Message = "Get data success!", Data = result });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
         }
 
         [HttpDelete]
