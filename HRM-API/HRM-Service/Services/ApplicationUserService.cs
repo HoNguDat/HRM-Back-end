@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
@@ -24,9 +26,21 @@ namespace HRM_Service.Services
         Task<ApplicationUser> GetApplicationUserByFullName(string name);
         Task<ApplicationUser> GetApplicationUserById(string id);
         Task<PagedResult<ApplicationUser>> GetApplicationUserByStatus(GetApplicationUserModule req);
-
+        bool IsVersionValid(ApplicationUser updatedUser, ApplicationUser existingUser);
         void DeleteApplicationUser(string id);
         Task<PagedResult<ApplicationUser>> GetAllPaging(GetApplicationUserModule req);
+        bool IsValidEmail(string email);
+        bool IsValidPhoneNumber(string phoneNumber);
+        bool IsValidDate(string dateStr);
+        bool IsValidStartDate(string dateStr);
+        bool IsValidInput(string input);
+        bool IsValidLengthAndCharacters(string input);
+        bool IsValidPassword(string password);
+        bool IsValidBankAccountNumber(string accountNumber);
+        bool IsValidImageFile(IFormFile formFile, string[] allowedExtensions);
+        bool IsValidLengthAndCharactersAddress(string input);
+        bool IsValidNull(ApplicationUser model);
+
 
     }
     public class ApplicationUserService : IApplicationUserService
@@ -130,7 +144,6 @@ namespace HRM_Service.Services
             var data = await _context.ApplicationUsers.FindAsync(id);
             if (data == null)
             {
-                // Xử lý trường hợp người dùng không tồn tại
                 throw new Exception("Người dùng không tồn tại.");
             }
             string uniqueFileName = "";
@@ -149,10 +162,8 @@ namespace HRM_Service.Services
                 throw new("User already exists");
 
             }
-            // Kiểm tra phiên bản của người dùng hiện tại
             if (!IsVersionValid(applicationUser, data))
             {
-                // Xử lý trường hợp xung đột
                 throw new DbUpdateConcurrencyException("Xung đột dữ liệu. Dữ liệu đã bị sửa đổi bởi người khác.");
             }
             data.Version = applicationUser.Version;
@@ -185,14 +196,128 @@ namespace HRM_Service.Services
 
             return data;
         }
-        private bool IsVersionValid(ApplicationUser updatedUser, ApplicationUser existingUser)
+        public bool IsValidNull(ApplicationUser model)
+        {
+            Position? position = null;
+            Department? department = null;
+            if (model.PositionId != null)
+            {
+                position = _context.Positions.FirstOrDefault(p => p.Id == model.PositionId);
+                if (position == null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public bool IsValidLengthAndCharactersAddress(string input)
+        {
+            int minLength = 3;
+            int maxLength = 255;
+            return input.Length >= minLength &&
+                   input.Length <= maxLength &&
+                   IsValidAddress(input);
+        }
+        public bool IsValidAddress(string address)
+        {
+            return Regex.IsMatch(address, "^[a-zA-Z0-9\\s\\u00C0-\\u1EF9,/]+$");
+        }
+        public bool IsValidImageFile(IFormFile formFile, string[] allowedExtensions)
+        {
+            if (formFile == null || formFile.Length == 0)
+            {
+                return false;
+            }
+            var fileExtension = Path.GetExtension(formFile.FileName).ToLowerInvariant();
+            return allowedExtensions.Contains(fileExtension.ToLowerInvariant());
+        }
+        public bool IsValidPassword(string password)
+        {
+            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.])(?!.*\s).{8,}$";
+            return Regex.IsMatch(password, pattern);
+        }
+        public bool IsValidLengthAndCharacters(string input)
+        {
+            int minLength = 3;
+            int maxLength = 255;
+            return input.Length >= minLength &&
+                   input.Length <= maxLength &&
+                   IsAlphanumeric(input);
+        }
+
+        public bool IsAlphanumeric(string input)
+        {
+            return Regex.IsMatch(input, "^[a-zA-Z0-9]*$");
+        }
+
+        public bool IsValidInput(string input)
+        {
+            return input.Trim() == input;
+        }
+        public bool IsValidDate(string dateStr)
+        {
+            int minYear = 1800;
+            int maxYear = DateTime.Now.Year;
+
+            if (DateTime.TryParseExact(dateStr, "MM/dd/yyyy h:mm:ss tt", null, System.Globalization.DateTimeStyles.None, out DateTime dateTime))
+            {
+                if (dateTime.Year < minYear || dateTime.Year > maxYear)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsValidBankAccountNumber(string accountNumber)
+        {
+            int minLength = 9;
+            int maxLength = 14;
+
+            return accountNumber.Length >= minLength && accountNumber.Length <= maxLength;
+        }
+        public bool IsValidStartDate(string dateStr)
+        {
+            int minYear = 1800;
+
+            if (DateTime.TryParseExact(dateStr, "MM/dd/yyyy h:mm:ss tt", null, System.Globalization.DateTimeStyles.None, out DateTime date))
+            {
+                return date.Year > minYear;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^(84|0[3|5|7|8|9])([0-9]{8})$";
+
+            return Regex.IsMatch(phoneNumber, pattern);
+        }
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mailAddress = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+        public bool IsVersionValid(ApplicationUser updatedUser, ApplicationUser existingUser)
         {
             if (updatedUser.Version == null || existingUser.Version == null)
             {
                 return false;
             }
 
-            // So sánh phiên bản của người dùng cập nhật với phiên bản hiện tại
             return updatedUser.Version.SequenceEqual(existingUser.Version);
         }
         private string UploadedFile(ApplicationUser model)
