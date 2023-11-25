@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HRM_Common;
+using HRM_Common.Migrations;
 using HRM_Common.Models;
 using HRM_Common.Models.ViewModels.Authenticate;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +29,17 @@ namespace HRM_Service.Services
         Task<bool> LogoutAsync(string userId);
         Task<bool> IsUserNameUniqueAsync(string userName);
         Task<bool> IsUserEmailUniqueAsync(string userName);
-
+        bool IsValidEmail(string email);
+        bool IsValidPhoneNumber(string phoneNumber);
+        bool IsValidDate(string dateStr);
+        bool IsValidStartDate(string dateStr);
+        bool IsValidInput(string input);
+        bool IsValidLengthAndCharacters(string input);
+        bool IsValidPassword(string password);
+        bool IsValidBankAccountNumber(string accountNumber);
+        bool IsValidImageFile(IFormFile formFile, string[] allowedExtensions);
+        bool IsValidLengthAndCharactersAddress(string input);
+        bool IsValidNull(ApplicationUser model);
     }
     public class AuthService : IAuthService
     {
@@ -34,6 +48,7 @@ namespace HRM_Service.Services
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+
         public AuthService(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ApplicationDbContext context)
         {
             this.userManager = userManager;
@@ -68,6 +83,8 @@ namespace HRM_Service.Services
             int nextEmployeeNumber = latestEmployeeNumber + 1;
             string employeeCode = $"NV-{nextEmployeeNumber}";
             string uniqueFileName = UploadedFile(model);
+            string formattedSalary = model.Salary.ToString().TrimStart('0');
+            double salary = double.Parse(string.IsNullOrEmpty(formattedSalary) ? "0" : formattedSalary);
             ApplicationUser user = new()
             {
                 Email = model.Email,
@@ -79,7 +96,7 @@ namespace HRM_Service.Services
                 Password = model.Password,
                 role = model.role,
                 Version = model.Version,
-                Salary = model.Salary,
+                Salary = salary,
                 Dob = model.Dob,
                 Gender = model.Gender,
                 PlaceOfBirth = model.PlaceOfBirth,
@@ -121,6 +138,123 @@ namespace HRM_Service.Services
                 }
             }
             return user;
+        }
+
+        public bool IsValidNull(ApplicationUser model)
+        {
+            Position? position = null;
+            Department? department = null;
+            if (model.PositionId != null)
+            {
+                position = _context.Positions.FirstOrDefault(p => p.Id == model.PositionId);
+                if(position == null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public bool IsValidLengthAndCharactersAddress(string input)
+        {
+            int minLength = 3;
+            int maxLength = 255;
+            return input.Length >= minLength &&
+                   input.Length <= maxLength &&
+                   IsValidAddress(input);
+        }
+        public bool IsValidAddress(string address)
+        {
+            return Regex.IsMatch(address, "^[a-zA-Z0-9\\s\\u00C0-\\u1EF9,/]+$") ;
+        }
+
+        public bool IsValidImageFile(IFormFile formFile, string[] allowedExtensions)
+        {
+            if (formFile == null || formFile.Length == 0)
+            {
+                return false;
+            }
+            var fileExtension = Path.GetExtension(formFile.FileName).ToLowerInvariant();
+            return allowedExtensions.Contains(fileExtension.ToLowerInvariant());
+        }
+        public bool IsValidPassword(string password)
+        {
+            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.])(?!.*\s).{8,}$";
+            return Regex.IsMatch(password, pattern);
+        }
+        public bool IsValidLengthAndCharacters(string input)
+        {
+            int minLength = 3;
+            int maxLength = 255;
+            return input.Length >= minLength &&
+                   input.Length <= maxLength &&
+                   IsAlphanumeric(input);
+        }
+
+        public bool IsAlphanumeric(string input)
+        {
+            return Regex.IsMatch(input, "^[a-zA-Z0-9]*$");
+        }
+
+        public bool IsValidInput(string input)
+        {
+            return input.Trim() == input;
+        }
+        public bool IsValidDate(string dateStr)
+        {
+            int minYear = 1800;
+            int maxYear = DateTime.Now.Year;
+
+            if (DateTime.TryParseExact(dateStr, "MM/dd/yyyy h:mm:ss tt", null, System.Globalization.DateTimeStyles.None, out DateTime dateTime))
+            {
+                if (dateTime.Year < minYear || dateTime.Year > maxYear)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsValidBankAccountNumber(string accountNumber)
+        {
+            int minLength = 9;
+            int maxLength = 14;
+
+            return accountNumber.Length >= minLength && accountNumber.Length <= maxLength;
+        }
+        public bool IsValidStartDate(string dateStr)
+        {
+            int minYear = 1800;
+
+            if (DateTime.TryParseExact(dateStr, "MM/dd/yyyy h:mm:ss tt", null, System.Globalization.DateTimeStyles.None, out DateTime date))
+            {
+                return date.Year > minYear;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^(84|0[3|5|7|8|9])([0-9]{8})$";
+
+            return Regex.IsMatch(phoneNumber, pattern);
+        }
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mailAddress = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
         private string UploadedFile(ApplicationUser model)
         {
