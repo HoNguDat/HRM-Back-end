@@ -1,10 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
   "Hash": "BykYypcYklE9v2gHyZX6KtYtJiKAgpsTbWIWXSIAoXc=",
-=======
-  "Hash": "vrY8BE8AfnR7ThJlYZKz1ULOfXr5eLlXGHAFxHL+uT4=",
->>>>>>> main
   "Source": "HRM-API",
   "BasePath": "_content/HRM-API",
   "Mode": "Default",
@@ -14,14 +10,13 @@
     {
       "Name": "HRM-API\\wwwroot",
       "Source": "HRM-API",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-<<<<<<< HEAD
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\03cd781e-b14e-472f-a530-ebbf6c9a55ed_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
@@ -40,12 +35,9 @@
     },
     {
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\03eae5a6-06b9-4a13-adf6-65dd6fbc767d_user.png",
-=======
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\03eae5a6-06b9-4a13-adf6-65dd6fbc767d_user.png",
->>>>>>> main
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/03eae5a6-06b9-4a13-adf6-65dd6fbc767d_user.png",
       "AssetKind": "All",
@@ -59,7 +51,6 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\03eae5a6-06b9-4a13-adf6-65dd6fbc767d_user.png"
     },
     {
-<<<<<<< HEAD
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\06d5cd10-76b9-42e9-858b-9e58f2df1714_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
@@ -78,12 +69,9 @@
     },
     {
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\08f969c2-dc63-4a89-a154-529f2f017123_user.png",
-=======
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\08f969c2-dc63-4a89-a154-529f2f017123_user.png",
->>>>>>> main
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/08f969c2-dc63-4a89-a154-529f2f017123_user.png",
       "AssetKind": "All",
@@ -97,7 +85,6 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\08f969c2-dc63-4a89-a154-529f2f017123_user.png"
     },
     {
-<<<<<<< HEAD
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\08fa5ecf-f3c1-4322-814f-bb9958636209_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
@@ -133,12 +120,9 @@
     },
     {
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\1e3fcb57-b737-463d-b892-23ff9abe43ee_user.png",
-=======
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\1e3fcb57-b737-463d-b892-23ff9abe43ee_user.png",
->>>>>>> main
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/1e3fcb57-b737-463d-b892-23ff9abe43ee_user.png",
       "AssetKind": "All",
@@ -152,7 +136,6 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\1e3fcb57-b737-463d-b892-23ff9abe43ee_user.png"
     },
     {
-<<<<<<< HEAD
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\21bf567e-fa46-401f-8cf7-b4c44c176704_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
@@ -205,29 +188,9 @@
     },
     {
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\60734164-a433-4f57-9a45-f3ef94d3faa1_user.png",
-=======
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\22294738-09b1-498e-985f-b97c952cda31_user.png",
->>>>>>> main
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
-      "BasePath": "_content/HRM-API",
-      "RelativePath": "assets/avatars/22294738-09b1-498e-985f-b97c952cda31_user.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\avatars\\22294738-09b1-498e-985f-b97c952cda31_user.png"
-    },
-    {
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\60734164-a433-4f57-9a45-f3ef94d3faa1_user.png",
-      "SourceId": "HRM-API",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/60734164-a433-4f57-9a45-f3ef94d3faa1_user.png",
       "AssetKind": "All",
@@ -241,7 +204,6 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\60734164-a433-4f57-9a45-f3ef94d3faa1_user.png"
     },
     {
-<<<<<<< HEAD
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\703d692c-c4c6-4df7-a128-0f99e4cae8cb_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
@@ -311,12 +273,9 @@
     },
     {
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\9172adba-481d-4925-938e-ac6bfeecc01b_user.png",
-=======
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\9172adba-481d-4925-938e-ac6bfeecc01b_user.png",
->>>>>>> main
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/9172adba-481d-4925-938e-ac6bfeecc01b_user.png",
       "AssetKind": "All",
@@ -330,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\9172adba-481d-4925-938e-ac6bfeecc01b_user.png"
     },
     {
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\928c2311-258b-4fbe-99ac-4f954309e924_user.png",
+      "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\928c2311-258b-4fbe-99ac-4f954309e924_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/928c2311-258b-4fbe-99ac-4f954309e924_user.png",
       "AssetKind": "All",
@@ -347,10 +306,10 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\928c2311-258b-4fbe-99ac-4f954309e924_user.png"
     },
     {
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\9c26282e-cbfa-49c2-b97c-4d7aa06a7b2d_user.png",
+      "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\9c26282e-cbfa-49c2-b97c-4d7aa06a7b2d_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/9c26282e-cbfa-49c2-b97c-4d7aa06a7b2d_user.png",
       "AssetKind": "All",
@@ -364,7 +323,6 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\9c26282e-cbfa-49c2-b97c-4d7aa06a7b2d_user.png"
     },
     {
-<<<<<<< HEAD
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\a0138060-f8df-40bb-ad22-c39b9172bee6_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
@@ -383,12 +341,9 @@
     },
     {
       "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\a0a95195-406b-46ff-8c8a-89cd5a1e980c_user.png",
-=======
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\a0a95195-406b-46ff-8c8a-89cd5a1e980c_user.png",
->>>>>>> main
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/a0a95195-406b-46ff-8c8a-89cd5a1e980c_user.png",
       "AssetKind": "All",
@@ -402,10 +357,10 @@
       "OriginalItemSpec": "wwwroot\\assets\\avatars\\a0a95195-406b-46ff-8c8a-89cd5a1e980c_user.png"
     },
     {
-      "Identity": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\a8332e1c-7d81-4312-91d0-4638259b031a_user.png",
+      "Identity": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\assets\\avatars\\a8332e1c-7d81-4312-91d0-4638259b031a_user.png",
       "SourceId": "HRM-API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
+      "ContentRoot": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\wwwroot\\",
       "BasePath": "_content/HRM-API",
       "RelativePath": "assets/avatars/a8332e1c-7d81-4312-91d0-4638259b031a_user.png",
       "AssetKind": "All",

@@ -112,7 +112,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\1e3fcb57-b737-463d-b892-23ff9abe43ee_user.png))</OriginalItemSpec>
     </StaticWebAsset>
-<<<<<<< HEAD
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\21bf567e-fa46-401f-8cf7-b4c44c176704_user.png))">
       <SourceType>Package</SourceType>
       <SourceId>HRM-API</SourceId>
@@ -129,8 +128,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\21bf567e-fa46-401f-8cf7-b4c44c176704_user.png))</OriginalItemSpec>
     </StaticWebAsset>
-=======
->>>>>>> main
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\22294738-09b1-498e-985f-b97c952cda31_user.png))">
       <SourceType>Package</SourceType>
       <SourceId>HRM-API</SourceId>
@@ -147,7 +144,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\22294738-09b1-498e-985f-b97c952cda31_user.png))</OriginalItemSpec>
     </StaticWebAsset>
-<<<<<<< HEAD
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\51aa547c-259f-4248-b284-bc8091cb58a2_user.png))">
       <SourceType>Package</SourceType>
       <SourceId>HRM-API</SourceId>
@@ -164,8 +160,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\51aa547c-259f-4248-b284-bc8091cb58a2_user.png))</OriginalItemSpec>
     </StaticWebAsset>
-=======
->>>>>>> main
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\assets\avatars\60734164-a433-4f57-9a45-f3ef94d3faa1_user.png))">
       <SourceType>Package</SourceType>
       <SourceId>HRM-API</SourceId>

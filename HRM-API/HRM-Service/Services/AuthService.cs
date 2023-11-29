@@ -29,7 +29,6 @@ namespace HRM_Service.Services
         Task<bool> LogoutAsync(string userId);
         Task<bool> IsUserNameUniqueAsync(string userName);
         Task<bool> IsUserEmailUniqueAsync(string userName);
-<<<<<<< HEAD
         bool IsValidEmail(string email);
         bool IsValidPhoneNumber(string phoneNumber);
         bool IsValidDate(string dateStr);
@@ -41,10 +40,8 @@ namespace HRM_Service.Services
         bool IsValidImageFile(IFormFile formFile, string[] allowedExtensions);
         bool IsValidLengthAndCharactersAddress(string input);
         bool IsValidNull(ApplicationUser model);
-=======
         Task<bool> ChangePasswordAsync(string userId, string currentPassword, string newPassword, string confirmPassword);
 
->>>>>>> main
     }
     public class AuthService : IAuthService
     {
@@ -53,13 +50,9 @@ namespace HRM_Service.Services
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-<<<<<<< HEAD
 
-        public AuthService(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ApplicationDbContext context)
-=======
         private readonly SignInManager<ApplicationUser> _signInManager;
         public AuthService(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ApplicationDbContext context, SignInManager<ApplicationUser> signInManager)
->>>>>>> main
         {
             _userManager = userManager;
             _roleManager = roleManager;

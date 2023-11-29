@@ -89,8 +89,17 @@ D:\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Common.dll
 D:\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Service.dll
 D:\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Common.pdb
 D:\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Service.pdb
+D:\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.staticwebassets.runtime.json
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.csproj.AssemblyReference.cache
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.GeneratedMSBuildEditorConfig.editorconfig
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.AssemblyInfoInputs.cache
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.AssemblyInfo.cs
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.csproj.CoreCompileInputs.cache
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.MvcApplicationPartsAssemblyInfo.cs
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.MvcApplicationPartsAssemblyInfo.cache
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\appsettings.Development.json
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\appsettings.json
+D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.staticwebassets.runtime.json
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.exe
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.deps.json
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.runtimeconfig.json
@@ -159,13 +168,6 @@ D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Common.dll
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Service.dll
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Common.pdb
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-Service.pdb
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.csproj.AssemblyReference.cache
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.GeneratedMSBuildEditorConfig.editorconfig
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.AssemblyInfoInputs.cache
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.AssemblyInfo.cs
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.csproj.CoreCompileInputs.cache
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.MvcApplicationPartsAssemblyInfo.cs
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.MvcApplicationPartsAssemblyInfo.cache
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\staticwebassets\msbuild.HRM-API.Microsoft.AspNetCore.StaticWebAssets.props
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\staticwebassets\msbuild.build.HRM-API.props
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.HRM-API.props
@@ -180,5 +182,3 @@ D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\refint\HRM-API.dll
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.pdb
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\HRM-API.genruntimeconfig.cache
 D:\HRM\HRM-Back-end\HRM-API\HRM-API\obj\Debug\net7.0\ref\HRM-API.dll
-D:\HRM\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.staticwebassets.runtime.json
-D:\HRM-Back-end\HRM-API\HRM-API\bin\Debug\net7.0\HRM-API.staticwebassets.runtime.json
