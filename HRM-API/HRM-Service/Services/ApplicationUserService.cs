@@ -27,6 +27,7 @@ namespace HRM_Service.Services
 
         void DeleteApplicationUser(string id);
         Task<PagedResult<ApplicationUser>> GetAllPaging(GetApplicationUserModule req);
+        
 
     }
     public class ApplicationUserService : IApplicationUserService
