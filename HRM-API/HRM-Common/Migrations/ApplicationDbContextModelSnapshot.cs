@@ -325,31 +325,42 @@ namespace HRM_Common.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CheckInTime")
+                    b.Property<DateTime?>("CheckInTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CheckOutTime")
+                    b.Property<DateTime?>("CheckOutTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmployeeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("GoInTime")
+                    b.Property<DateTime?>("GoInTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("GoOutTime")
+                    b.Property<DateTime?>("GoOutTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MinutesLate")
-                        .HasColumnType("int");
+                    b.Property<double?>("HoursOutside")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("HoursWorking")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("MinutesLate")
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("PayrollId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CheckInRecordId");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("PayrollId");
 
                     b.ToTable("CheckInRecords");
                 });
@@ -427,24 +438,24 @@ namespace HRM_Common.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("EmployeeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("HourDeducted")
+                    b.Property<double?>("HoursWorking")
                         .HasColumnType("float");
 
-                    b.Property<double>("HourViolating")
+                    b.Property<double?>("MinutesLate")
                         .HasColumnType("float");
 
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Total")
+                    b.Property<double?>("Salary")
                         .HasColumnType("float");
 
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
+                    b.Property<double?>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -699,6 +710,10 @@ namespace HRM_Common.Migrations
                         .WithMany("CheckInRecords")
                         .HasForeignKey("ApplicationUserId");
 
+                    b.HasOne("HRM_Common.Models.Payroll", null)
+                        .WithMany("CheckInRecords")
+                        .HasForeignKey("PayrollId");
+
                     b.Navigation("ApplicationUser");
                 });
 
@@ -808,6 +823,11 @@ namespace HRM_Common.Migrations
                     b.Navigation("ApplicationUsers");
 
                     b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("HRM_Common.Models.Payroll", b =>
+                {
+                    b.Navigation("CheckInRecords");
                 });
 
             modelBuilder.Entity("HRM_Common.Models.Position", b =>

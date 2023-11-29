@@ -70,9 +70,9 @@ namespace hrm_api.Controllers
             try
             {
                 string[] allowedExtensions = { ".jpg", ".png", ".gif" };
-                if(!_authService.IsValidImageFile(model.FormFile, allowedExtensions))
+                if (!_authService.IsValidImageFile(model.FormFile, allowedExtensions))
                 {
-                    return BadRequest(new { Message = "The file is not an image file!", Status = "400", Description = "Bad Request"});
+                    return BadRequest(new { Message = "The file is not an image file!", Status = "400", Description = "Bad Request" });
                 }
                 if (!_authService.IsValidNull(model))
                 {
@@ -88,7 +88,8 @@ namespace hrm_api.Controllers
                 {
                     return BadRequest(new { Message = "Email already exists!", Status = "400", Description = "Bad Request" });
                 }
-                if (!_authService.IsValidEmail(model.Email)){
+                if (!_authService.IsValidEmail(model.Email))
+                {
                     return BadRequest(new { Message = "Email invalidate!", Status = "400", Description = "Bad Request" });
                 }
                 if (!_authService.IsValidPhoneNumber(model.PhoneNumber))
@@ -144,7 +145,7 @@ namespace hrm_api.Controllers
                 {
                     return BadRequest(new { Message = "FullName invalidate!", Status = "400", Description = "Bad Request" });
                 }
-              
+
                 if (!_authService.IsValidLengthAndCharacters(model.PhoneNumber))
                 {
                     return BadRequest(new { Message = "PhoneNumber invalidate!", Status = "400", Description = "Bad Request" });

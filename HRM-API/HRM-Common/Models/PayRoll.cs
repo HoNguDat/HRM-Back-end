@@ -11,11 +11,12 @@ namespace HRM_Common.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
-        public double HourDeducted { get; set; }
-        public double HourViolating { get; set; }
-        public double Total { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? Date { get; set; }
+        public double? Total { get; set; }
+        public double? MinutesLate { get; set; }
+        public double? HoursWorking { get; set; }
+        public double? Salary { get; set; }
         public string EmployeeId { get; set; }
         public virtual ApplicationUser? ApplicationUser { get; set; }
     }

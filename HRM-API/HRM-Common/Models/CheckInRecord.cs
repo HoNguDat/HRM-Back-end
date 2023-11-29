@@ -11,13 +11,21 @@ namespace HRM_Common.Models
     {
         [Key]
         public Guid CheckInRecordId { get; set; }
-        public DateTime CheckInTime { get; set; }
-        public DateTime CheckOutTime { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime GoOutTime { get; set; }
-        public DateTime GoInTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? CheckInTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? CheckOutTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? Date { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? GoOutTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? GoInTime { get; set; }
         public string EmployeeId { get; set; }
-        public int MinutesLate { get; set; }
+        public double? MinutesLate { get; set; }
+        public double? HoursOutside { get; set; }
+        public double? HoursWorking { get; set; }
+
         public virtual ApplicationUser? ApplicationUser { get; set; }
     }
 }
