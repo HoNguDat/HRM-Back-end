@@ -22,7 +22,13 @@ builder.Services.AddScoped<IAbsenceService, AbsenceService>();
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
 builder.Services.AddScoped<IApplicationFormService, ApplicationFormService>();
 builder.Services.AddScoped<IHolidayConfigService, HolidayConfigService>();
+<<<<<<< HEAD
+builder.Services.AddScoped<ICheckInRecordService, CheckInRecordService>();
+builder.Services.AddScoped<IPayrollService, PayrollService>();
+
+=======
 builder.Services.AddScoped<ICandidateService, CandidateService>();
+>>>>>>> main
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
