@@ -15,9 +15,9 @@ namespace HRM_Common.Models
         public int Type { get; set; }
         public DateTime FromDateSingle { get; set; }
         public ShiftType ShiftTypeSingle { get; set; }
-        public DateTime? FromDateMulti { get; set; }
+        public DateTime FromDateMulti { get; set; }
         public ShiftType ShiftTypeFromDateMulti { get; set; }
-        public DateTime? ToDateMulti { get; set; }
+        public DateTime ToDateMulti { get; set; }
         public ShiftType ShiftTypeToDateMulti { get; set; }
         public string? Reason { get; set; }
         public string ApplicationUserId { get; set; }
