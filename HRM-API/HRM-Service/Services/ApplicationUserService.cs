@@ -29,6 +29,7 @@ namespace HRM_Service.Services
         bool IsVersionValid(ApplicationUser updatedUser, ApplicationUser existingUser);
         void DeleteApplicationUser(string id);
         Task<PagedResult<ApplicationUser>> GetAllPaging(GetApplicationUserModule req);
+<<<<<<< HEAD
         bool IsValidEmail(string email);
         bool IsValidPhoneNumber(string phoneNumber);
         bool IsValidDate(string dateStr);
@@ -41,6 +42,9 @@ namespace HRM_Service.Services
         bool IsValidLengthAndCharactersAddress(string input);
         bool IsValidNull(ApplicationUser model);
 
+=======
+        
+>>>>>>> main
 
     }
     public class ApplicationUserService : IApplicationUserService

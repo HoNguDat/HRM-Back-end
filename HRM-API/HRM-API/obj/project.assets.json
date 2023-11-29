@@ -3822,23 +3822,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ACER\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\PC\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\HRM-API.csproj",
+      "projectUniqueName": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\HRM-API.csproj",
       "projectName": "HRM-API",
-      "projectPath": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\HRM-API.csproj",
-      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-      "outputPath": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-API\\obj\\",
+      "projectPath": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\HRM-API.csproj",
+      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+      "outputPath": "D:\\HRM-Back-end\\HRM-API\\HRM-API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3847,18 +3849,19 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-Common\\HRM-Common.csproj": {
-              "projectPath": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-Common\\HRM-Common.csproj"
+            "D:\\HRM-Back-end\\HRM-API\\HRM-Common\\HRM-Common.csproj": {
+              "projectPath": "D:\\HRM-Back-end\\HRM-API\\HRM-Common\\HRM-Common.csproj"
             },
-            "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-Service\\HRM-Service.csproj": {
-              "projectPath": "D:\\HRM\\HRM-Back-end\\HRM-API\\HRM-Service\\HRM-Service.csproj"
+            "D:\\HRM-Back-end\\HRM-API\\HRM-Service\\HRM-Service.csproj": {
+              "projectPath": "D:\\HRM-Back-end\\HRM-API\\HRM-Service\\HRM-Service.csproj"
             }
           }
         }
@@ -3935,7 +3938,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

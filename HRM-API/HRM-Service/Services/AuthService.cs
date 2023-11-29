@@ -29,6 +29,7 @@ namespace HRM_Service.Services
         Task<bool> LogoutAsync(string userId);
         Task<bool> IsUserNameUniqueAsync(string userName);
         Task<bool> IsUserEmailUniqueAsync(string userName);
+<<<<<<< HEAD
         bool IsValidEmail(string email);
         bool IsValidPhoneNumber(string phoneNumber);
         bool IsValidDate(string dateStr);
@@ -40,32 +41,42 @@ namespace HRM_Service.Services
         bool IsValidImageFile(IFormFile formFile, string[] allowedExtensions);
         bool IsValidLengthAndCharactersAddress(string input);
         bool IsValidNull(ApplicationUser model);
+=======
+        Task<bool> ChangePasswordAsync(string userId, string currentPassword, string newPassword, string confirmPassword);
+
+>>>>>>> main
     }
     public class AuthService : IAuthService
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+<<<<<<< HEAD
 
         public AuthService(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ApplicationDbContext context)
+=======
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public AuthService(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ApplicationDbContext context, SignInManager<ApplicationUser> signInManager)
+>>>>>>> main
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _signInManager = signInManager;
         }
 
         public async Task<bool> IsUserNameUniqueAsync(string userName)
         {
-            var userExists = await userManager.FindByNameAsync(userName);
+            var userExists = await _userManager.FindByNameAsync(userName);
             return userExists == null;
         }
         public async Task<bool> IsUserEmailUniqueAsync(string email)
         {
-            var userExists = await userManager.FindByEmailAsync(email);
+            var userExists = await _userManager.FindByEmailAsync(email);
             return userExists == null;
         }
         public async Task<ApplicationUser> Registeration(ApplicationUser model, string role)
@@ -117,15 +128,15 @@ namespace HRM_Service.Services
             };
             try
             {
-                var createUserResult = await userManager.CreateAsync(user, model.Password);
+                var createUserResult = await _userManager.CreateAsync(user, model.Password);
                 if (!createUserResult.Succeeded)
                     throw new("User creation failed! Please check user details and try again.");
 
-                if (!await roleManager.RoleExistsAsync(role))
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                if (!await _roleManager.RoleExistsAsync(role))
+                    await _roleManager.CreateAsync(new IdentityRole(role));
 
-                if (await roleManager.RoleExistsAsync(role))
-                    await userManager.AddToRoleAsync(user, role);
+                if (await _roleManager.RoleExistsAsync(role))
+                    await _userManager.AddToRoleAsync(user, role);
 
             }
             catch (DbUpdateException ex)
@@ -273,7 +284,7 @@ namespace HRM_Service.Services
         }
         public async Task<TokenViewModel> Login(LoginModel model)
         {
-            var user = await userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             TokenViewModel _TokenViewModel = new TokenViewModel();
 
             if (user == null)
@@ -282,7 +293,7 @@ namespace HRM_Service.Services
                 _TokenViewModel.StatusMessage = "Invalid username";
                 return _TokenViewModel;
             }
-            if (!await userManager.CheckPasswordAsync(user, model.Password))
+            if (!await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 _TokenViewModel.StatusCode = 0;
                 _TokenViewModel.StatusMessage = "Invalid password";
@@ -290,7 +301,7 @@ namespace HRM_Service.Services
                 return _TokenViewModel;
             }
 
-            var userRoles = await userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
             {
                new Claim(ClaimTypes.Name, user.UserName),
@@ -312,7 +323,7 @@ namespace HRM_Service.Services
             var _RefreshTokenValidityInDays = Convert.ToInt64(_configuration["JWTKey:RefreshTokenValidityInDays"]);
             user.RefreshToken = _TokenViewModel.RefreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_RefreshTokenValidityInDays);
-            await userManager.UpdateAsync(user);
+            await _userManager.UpdateAsync(user);
 
 
             return _TokenViewModel;
@@ -320,12 +331,12 @@ namespace HRM_Service.Services
 
         public async Task<bool> LogoutAsync(string userId)
         {
-            var user = await userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
                 user.RefreshToken = null;
                 user.RefreshTokenExpiryTime = null;
-                var result = await userManager.UpdateAsync(user);
+                var result = await _userManager.UpdateAsync(user);
 
                 if (result.Succeeded)
                 {
@@ -342,7 +353,7 @@ namespace HRM_Service.Services
             TokenViewModel _TokenViewModel = new();
             var principal = GetPrincipalFromExpiredToken(model.AccessToken);
             string username = principal.Identity.Name;
-            var user = await userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(username);
 
             if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
@@ -360,7 +371,7 @@ namespace HRM_Service.Services
             var newRefreshToken = GenerateRefreshToken();
 
             user.RefreshToken = newRefreshToken;
-            await userManager.UpdateAsync(user);
+            await _userManager.UpdateAsync(user);
 
             _TokenViewModel.StatusCode = 1;
             _TokenViewModel.StatusMessage = "Success";
@@ -414,5 +425,28 @@ namespace HRM_Service.Services
 
             return principal;
         }
+
+        public async Task<bool> ChangePasswordAsync(string userId, string currentPassword, string newPassword,string confirmPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            if(newPassword != confirmPassword)
+            {
+                throw new Exception("New password and confirm password are incorrect");
+            }
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            if (changePasswordResult.Succeeded)
+            {
+                return true; 
+            }
+
+            return false; 
+        }
+
     }
 }

@@ -64,8 +64,12 @@ namespace hrm_api.Controllers
 
         [HttpPost]
         [Route("registeration")]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register([FromForm] ApplicationUser model)
+=======
+        public async Task<IActionResult> Register([FromBody] ApplicationUser model)
+>>>>>>> main
         {
             try
             {
@@ -176,6 +180,28 @@ namespace hrm_api.Controllers
                 }
                 var data = await _authService.Registeration(model, model.role.ToString());
                 return Ok(new { Message = "Add success!", Data = new ApplicationUserRes(data), Status = "200", Description = "Success" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            try
+            {
+
+                var result = await _authService.ChangePasswordAsync(model.ApplicationUserId, model.CurrentPassword, model.NewPassword,model.ConfirmPassword);
+
+                if (result)
+                {
+                    return Ok("Password changed successfully.");
+                }
+
+                return BadRequest("Failed to change password. Please check your current password.");
             }
             catch (Exception ex)
             {

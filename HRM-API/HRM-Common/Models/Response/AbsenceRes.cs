@@ -13,10 +13,10 @@ namespace HRM_Common.Models.Response
         public int Type { get; set; }
         public string FromDateSingle { get; set; }
         public string ShiftTypeSingle { get; set; }
-        public DateTime? FromDateMulti { get; set; }
-        public ShiftType ShiftTypeFromDateMulti { get; set; }
-        public DateTime? ToDateMulti { get; set; }
-        public ShiftType ShiftTypeToDateMulti { get; set; }
+        public string FromDateMulti { get; set; }
+        public string ShiftTypeFromDateMulti { get; set; }
+        public string ToDateMulti { get; set; }
+        public string ShiftTypeToDateMulti { get; set; }
         public string? Reason { get; set; }
         public decimal HourDeducted { get; set; }
         public string EmployeeName { get; set; }
@@ -29,6 +29,15 @@ namespace HRM_Common.Models.Response
             string fromDateSingle = absence.FromDateSingle.ToString("dd/MM/yyyy");
             FromDateSingle = fromDateSingle;
             ShiftTypeSingle = absence.ShiftTypeSingle.ToString();
+
+            string fromDateMulti = absence.FromDateMulti.ToString("dd/MM/yyyy");
+            FromDateMulti = fromDateMulti;
+            ShiftTypeFromDateMulti = absence.ShiftTypeFromDateMulti.ToString();
+
+            string toDateMulti = absence.ToDateMulti.ToString("dd/MM/yyyy");
+            ToDateMulti = toDateMulti;
+            ShiftTypeToDateMulti = absence.ShiftTypeToDateMulti.ToString();
+
             Reason = absence.Reason;
             HourDeducted = absence.HourDeducted;
             EmployeeName = absence.ApplicationUser?.FullName;
