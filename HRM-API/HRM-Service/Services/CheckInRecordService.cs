@@ -133,9 +133,13 @@ namespace HRM_Service.Services
             if (checkIn != null)
             {
                 applicationUser = _context.ApplicationUsers.FirstOrDefault(p => p.Id == checkIn.EmployeeId);
+                if (applicationUser == null)
+                {
+                    throw new Exception("User does not exist");
+                }
             }
 
-            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date == checkIn.Date && c.EmployeeId == checkIn.EmployeeId);
+            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date.Value.Date == checkIn.Date.Value.Date && c.EmployeeId == checkIn.EmployeeId);
             if (checkInExists != null)
             {
                 //check-in rồi không được check-in nửa
@@ -148,10 +152,10 @@ namespace HRM_Service.Services
             else if (checkIn?.CheckInTime != null)
             {
 
-                //if (CalculateLateMinutes(checkIn.CheckInTime, designatedTime) <= 0)
-                //{
-                //    throw new Exception("Check-in is invalid");
-                //}
+                if (CalculateLateMinutes(checkIn.CheckInTime, designatedTime) <= 0)
+                {
+                    throw new Exception("Check-in is invalid");
+                }
 
                 double? minutesLate = CalculateLateMinutes(checkIn.CheckInTime, designatedTime);
                 CheckInRecord checkInRecord = new CheckInRecord
@@ -196,8 +200,12 @@ namespace HRM_Service.Services
             if (chechOut != null)
             {
                 applicationUser = _context.ApplicationUsers.FirstOrDefault(p => p.Id == chechOut.EmployeeId);
+                if (applicationUser == null)
+                {
+                    throw new Exception("User does not exist");
+                }
             }
-            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date == chechOut.Date && c.EmployeeId == chechOut.EmployeeId);
+            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date.Value.Date == chechOut.Date.Value.Date && c.EmployeeId == chechOut.EmployeeId);
             if (IsCheckInBeforeCheckOut(checkInExists?.CheckInTime, chechOut.CheckOutTime) == false)
             {
                 throw new Exception("Check-out must be greater than check-in");
@@ -259,8 +267,12 @@ namespace HRM_Service.Services
             if (goOut != null)
             {
                 applicationUser = _context.ApplicationUsers.FirstOrDefault(p => p.Id == goOut.EmployeeId);
+                if (applicationUser == null)
+                {
+                    throw new Exception("User does not exist");
+                }
             }
-            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date == goOut.Date && c.EmployeeId == goOut.EmployeeId);
+            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date.Value.Date == goOut.Date.Value.Date && c.EmployeeId == goOut.EmployeeId);
             if (IsCheckInBeforeCheckOut(checkInExists?.CheckInTime, goOut.GoOutTime) == false)
             {
                 throw new Exception("Go-out must be greater than check-in");
@@ -319,8 +331,12 @@ namespace HRM_Service.Services
             if (goIn != null)
             {
                 applicationUser = _context.ApplicationUsers.FirstOrDefault(p => p.Id == goIn.EmployeeId);
+                if (applicationUser == null)
+                {
+                    throw new Exception("User does not exist");
+                }
             }
-            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date == goIn.Date && c.EmployeeId == goIn.EmployeeId);
+            var checkInExists = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date.Value.Date == goIn.Date.Value.Date && c.EmployeeId == goIn.EmployeeId);
             if (IsCheckInBeforeCheckOut(checkInExists?.CheckInTime, goIn.GoInTime) == false)
             {
                 throw new Exception("Go-in must be greater than check-in");
@@ -337,10 +353,10 @@ namespace HRM_Service.Services
                     {
                         throw new Exception("Go-in must be greater than go-out");
                     }
-                    //if (CalculateLateHours(checkInExists.GoOutTime, goIn.GoInTime) <= 0)
-                    //{
-                    //    throw new Exception("Go-in is invalid");
-                    //}
+                    if (CalculateLateHours(checkInExists.GoOutTime, goIn.GoInTime) <= 0)
+                    {
+                        throw new Exception("Go-in is invalid");
+                    }
                     double? hoursOutside = CalculateLateHours(checkInExists.GoOutTime, goIn.GoInTime);
 
                     if (checkInExists.HoursOutside == null)
@@ -364,10 +380,10 @@ namespace HRM_Service.Services
                     }
                     else
                     {
-                        //if (CalculateLateHours(checkInExists.GoOutTime, goIn.GoInTime) <= 0)
-                        //{
-                        //    throw new Exception("Go-in is invalid");
-                        //}
+                        if (CalculateLateHours(checkInExists.GoOutTime, goIn.GoInTime) <= 0)
+                        {
+                            throw new Exception("Go-in is invalid");
+                        }
                         double? hoursOutside = CalculateLateHours(checkInExists.GoOutTime, goIn.GoInTime);
 
                         if (checkInExists.HoursOutside == null)
@@ -498,5 +514,6 @@ namespace HRM_Service.Services
             _context.Entry(checkInRecord).State = EntityState.Deleted;
             _context.SaveChanges();
         }
+        
     }
 }

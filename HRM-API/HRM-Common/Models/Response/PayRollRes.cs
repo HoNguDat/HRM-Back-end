@@ -9,6 +9,7 @@ namespace HRM_Common.Models.Response
 {
     public class PayRollRes
     {
+        public Guid? Id { get; set; }
         public string FullName { get; set; }
         public string? Date { get; set; }
         public double? MinutesLate { get; set; }
@@ -22,6 +23,7 @@ namespace HRM_Common.Models.Response
         public PayRollRes() { }
         public PayRollRes(Payroll payroll)
         {
+            Id = payroll.Id;
             FullName = payroll.ApplicationUser.FullName;
             Date = payroll.Date?.ToString("dd/MM/yyyy hh:mm tt");
             MinutesLate = payroll.MinutesLate;

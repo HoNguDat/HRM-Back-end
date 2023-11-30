@@ -17,7 +17,7 @@ namespace HRM_Common.Models
         public double? MinutesLate { get; set; }
         public double? HoursWorking { get; set; }
         public double? Salary { get; set; }
-        public string EmployeeId { get; set; }
+        public string? EmployeeId { get; set; }
         public virtual ApplicationUser? ApplicationUser { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HRM_Common;
-using HRM_Common.Migrations;
 using HRM_Common.Models;
 using HRM_Common.Models.ViewModels.Authenticate;
 using Microsoft.AspNetCore.Hosting;

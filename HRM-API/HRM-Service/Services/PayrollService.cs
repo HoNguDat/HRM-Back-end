@@ -15,8 +15,9 @@ namespace HRM_Service.Services
 {
     public interface IPayrollService
     {
-        Task<PagedResult<Payroll>> GetAllPaging(GetApplicationUserModule req);
+        Task<PagedResult<Payroll>> GetAllPaging(GetApplicationUserModule req, int? mounth, int? year);
         Task<Payroll> AddPayRoll(Payroll payroll);
+        void DeletePayRoll(Guid id);
     }
     public class PayrollService : IPayrollService
     {
@@ -29,12 +30,20 @@ namespace HRM_Service.Services
         {
             _context = applicationDbContext;
         }
-        public async Task<PagedResult<Payroll>> GetAllPaging(GetApplicationUserModule req)
+        public async Task<PagedResult<Payroll>> GetAllPaging(GetApplicationUserModule req, int? mounth, int? year)
         {
             var query = _context.Payrolls.Include(p => p.ApplicationUser).AsQueryable();
             if (!string.IsNullOrEmpty(req.Keyword))
             {
                 query = query.Where(s => s.ApplicationUser.FullName.ToLower().Contains(req.Keyword.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(mounth.ToString()) || (!string.IsNullOrEmpty(mounth.ToString()) && !string.IsNullOrEmpty(year.ToString())))
+            {
+                if (string.IsNullOrEmpty(year.ToString()))
+                {
+                    year = DateTime.Now.Year;
+                }
+                query = query.Where(s => s.Date.Value.Month == mounth  && s.Date.Value.Year == year);
             }
             if (req.Direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
             {
@@ -60,50 +69,127 @@ namespace HRM_Service.Services
 
         public async Task<Payroll> AddPayRoll(Payroll payroll)
         {
-            ApplicationUser? applicationUser = null;
-            if (payroll != null)
+            if(IsValidDate(payroll.Date.Value.ToString()) == false)
             {
-                applicationUser = _context.ApplicationUsers.FirstOrDefault(p => p.Id == payroll.EmployeeId);
-                if(applicationUser == null) {
-                    throw new Exception("User does not exist");
+                throw new Exception("Date is validate");
+            }
+            List<ApplicationUser> workingUsers = _context.ApplicationUsers
+            .Where(u => u.EmployeeStatus == 0)
+            .ToList();
+            var payrollByDate = _context.Payrolls.FirstOrDefault(p => p.Date.Value.Month == payroll.Date.Value.Month && p.Date.Value.Year == payroll.Date.Value.Year);
+            if(IsLastDayOfMonth(payroll.Date.Value) == false)
+            {
+                throw new Exception("Phải là ngày cuối của tháng mới được tính");
+            }
+            if(payrollByDate != null)
+            {
+                throw new Exception("Tháng này đã được tính");
+            }
+            foreach (var applicationUser in workingUsers)
+            {
+                var payrollById = _context.Payrolls.FirstOrDefault(p => p.EmployeeId == applicationUser.Id);
+                if (payrollById == null)
+                {
+                    //tính giờ đi làm và giờ đi trễ
+                    List<CheckInRecord> checkInRecords = _context.CheckInRecords
+                 .Where(record => record.EmployeeId == applicationUser.Id &&
+                                 record.Date.HasValue &&
+                                 record.Date.Value.Year == payroll.Date.Value.Year &&
+                                 record.Date.Value.Month == payroll.Date.Value.Month)
+                 .ToList();
+
+                    double totalMinutesLate = checkInRecords.Sum(record => record.MinutesLate ?? 0);
+                    double totalHoursWorking = checkInRecords.Sum(record => record.HoursWorking ?? 0);
+                    double totalHoursOutSide = checkInRecords.Sum(record => record.HoursOutside ?? 0);
+
+
+                    //Tính giờ nghĩ phép
+                    List<Absence> abencesSingle = _context.Absences
+                    .Where(abence => abence.ApplicationUserId == applicationUser.Id &&
+                                    abence.FromDateSingle.Year == payroll.Date.Value.Year &&
+                                    abence.FromDateSingle.Month == payroll.Date.Value.Month)
+                    .ToList();
+                    List<Absence> abencesMulti = _context.Absences
+                    .Where(abence => abence.ApplicationUserId == applicationUser.Id &&
+                             payroll.Date.Value.Year >= abence.FromDateMulti.Year &&
+                             payroll.Date.Value.Year <= abence.ToDateMulti.Year &&
+                             payroll.Date.Value.Month >= abence.FromDateMulti.Month &&
+                             payroll.Date.Value.Month <= abence.ToDateMulti.Month)
+                    .ToList();
+                    decimal totalHourDeductedSingle = abencesMulti.Sum(record => record.HourDeducted);
+                    decimal totalHourDeductedMulti = abencesMulti.Sum(record => record.HourDeducted);
+                    decimal totalHourDeducted = totalHourDeductedSingle + totalHourDeductedMulti;
+
+                    //Tính lương
+                    double salaryPerHour = (applicationUser.Salary ?? 0) / (Working_hours_1_day * Working_day_1_month);
+                    double salaryPerMinute = salaryPerHour / 60;
+
+                    double totalSalary = 0;
+                    if (totalHoursOutSide * 60 > 70)
+                    {
+                        totalSalary = (applicationUser.Salary ?? 0) - (salaryPerMinute * (totalMinutesLate + (double)(totalHourDeducted * 60) + (totalHoursOutSide * 60 - 60)));
+                    }
+                    else
+                    {
+                        totalSalary = (applicationUser.Salary ?? 0) - (salaryPerMinute * (totalMinutesLate + (double)(totalHourDeducted * 60)));
+                    }
+                    // Thêm lương vào database
+                    Payroll addPayRoll = new Payroll
+                    {
+                        HoursWorking = Math.Round(totalHoursWorking - totalHoursOutSide),
+                        MinutesLate = totalMinutesLate,
+                        Date = payroll.Date,
+                        Salary = Math.Round(applicationUser.Salary.Value),
+                        EmployeeId = applicationUser.Id,
+                        ApplicationUser = applicationUser,
+                        Total = Math.Round(totalSalary)
+                    };
+                    _context.Payrolls.Add(addPayRoll);
                 }
             }
-
-            List<CheckInRecord> checkInRecords = _context.CheckInRecords
-             .Where(record => record.EmployeeId == payroll.EmployeeId &&
-                             record.Date.HasValue &&  
-                             record.Date.Value.Year == payroll.Date.Value.Year &&
-                             record.Date.Value.Month == payroll.Date.Value.Month)
-             .ToList();
-
-            double totalMinutesLate = checkInRecords.Sum(record => record.MinutesLate ?? 0);
-            double totalHoursWorking = checkInRecords.Sum(record => record.HoursWorking ?? 0);
-            double salaryPerHour = (applicationUser.Salary ?? 0) / (Working_hours_1_day * Working_day_1_month);
-            double salaryPerMinute = salaryPerHour / 60;
-
-            double totalSalary = (applicationUser.Salary ?? 0) - (salaryPerMinute * totalMinutesLate);
-            // Thêm lương vào database
-            Payroll addPayRoll = new Payroll
-            {
-                HoursWorking = totalHoursWorking,
-                MinutesLate = totalMinutesLate,
-                Date = payroll.Date,
-                Salary = applicationUser.Salary,
-                EmployeeId = payroll.EmployeeId,
-                ApplicationUser = applicationUser,
-                Total = payroll.Total
-
-
-            };
-            _context.Payrolls.Add(addPayRoll);
             await _context.SaveChangesAsync();
 
             return payroll;
         }
 
-        public void CalculateAndSavePayroll()
+        static bool IsLastDayOfMonth(DateTime date)
         {
+           
+            DateTime lastDayOfMonth = new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1);
 
+            return date.Date == lastDayOfMonth.Date;
+        }
+
+        public void DeletePayRoll(Guid id)
+        {
+            var payroll = _context.Payrolls.Find(id);
+
+            if (payroll == null)
+            {
+                throw new Exception("Id không tồn tại");
+            }
+            _context.Entry(payroll).State = EntityState.Deleted;
+            _context.SaveChanges();
+        }
+
+        public bool IsValidDate(string dateStr)
+        {
+            int minYear = 1800;
+            int maxYear = DateTime.Now.Year;
+
+            if (DateTime.TryParseExact(dateStr, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime dateTime))
+            {
+                if (dateTime.Year < minYear || dateTime.Year > maxYear)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

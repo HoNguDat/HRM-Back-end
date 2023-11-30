@@ -65,7 +65,7 @@ namespace hrm_api.Controllers
         [HttpPost]
         [Route("registeration")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Register([FromBody] ApplicationUser model)
+        public async Task<IActionResult> Register([FromForm] ApplicationUser model)
         {
             try
             {

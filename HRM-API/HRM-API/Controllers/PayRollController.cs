@@ -19,9 +19,9 @@ namespace HRM_API.Controllers
 
         [HttpGet]
         [Route("get-all-paging-payroll")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetApplicationUserModule req)
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetApplicationUserModule req, int? mounth, int? year)
         {
-            var data = await _payrollService.GetAllPaging(req);
+            var data = await _payrollService.GetAllPaging(req, mounth,year);
             var result = new PagedResult<PayRollRes>
             {
                 Results = data.Results.Select(p => new PayRollRes(p)).ToList(),
@@ -42,6 +42,22 @@ namespace HRM_API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { Message = ex.Message.ToString(), Status = "400", Description = "Bad Request" });
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete-payroll/{id}")]
+        public async Task<IActionResult> DeletePayRoll(Guid id)
+        {
+
+            try
+            {
+                _payrollService.DeletePayRoll(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+               return BadRequest(new {Message = ex.Message.ToString()});
             }
         }
     }

@@ -169,9 +169,9 @@ namespace HRM_Common.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     FromDateSingle = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ShiftTypeSingle = table.Column<int>(type: "int", nullable: false),
-                    FromDateMulti = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FromDateMulti = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ShiftTypeFromDateMulti = table.Column<int>(type: "int", nullable: false),
-                    ToDateMulti = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ToDateMulti = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ShiftTypeToDateMulti = table.Column<int>(type: "int", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -274,6 +274,32 @@ namespace HRM_Common.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CheckInRecords",
+                columns: table => new
+                {
+                    CheckInRecordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CheckInTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CheckOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GoOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GoInTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MinutesLate = table.Column<double>(type: "float", nullable: true),
+                    HoursOutside = table.Column<double>(type: "float", nullable: true),
+                    HoursWorking = table.Column<double>(type: "float", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CheckInRecords", x => x.CheckInRecordId);
+                    table.ForeignKey(
+                        name: "FK_CheckInRecords_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payrolls",
                 columns: table => new
                 {
@@ -325,38 +351,6 @@ namespace HRM_Common.Migrations
                         principalTable: "Positions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CheckInRecords",
-                columns: table => new
-                {
-                    CheckInRecordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CheckInTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CheckOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GoOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GoInTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MinutesLate = table.Column<double>(type: "float", nullable: true),
-                    HoursOutside = table.Column<double>(type: "float", nullable: true),
-                    HoursWorking = table.Column<double>(type: "float", nullable: true),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    PayrollId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CheckInRecords", x => x.CheckInRecordId);
-                    table.ForeignKey(
-                        name: "FK_CheckInRecords_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_CheckInRecords_Payrolls_PayrollId",
-                        column: x => x.PayrollId,
-                        principalTable: "Payrolls",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -484,11 +478,6 @@ namespace HRM_Common.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CheckInRecords_PayrollId",
-                table: "CheckInRecords",
-                column: "PayrollId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Payrolls_ApplicationUserId",
                 table: "Payrolls",
                 column: "ApplicationUserId");
@@ -543,13 +532,13 @@ namespace HRM_Common.Migrations
                 name: "HolidayConfigs");
 
             migrationBuilder.DropTable(
+                name: "Payrolls");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Recruitments");
-
-            migrationBuilder.DropTable(
-                name: "Payrolls");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -10,7 +10,7 @@ namespace HRM_Common.Models.Response
 {
     public class CheckInRecordRes
     {
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
         public string Id { get; set; }
         public string? Date { get; set; }
         public string? CheckInTime { get; set; }
@@ -25,7 +25,7 @@ namespace HRM_Common.Models.Response
         public CheckInRecordRes() { }
         public CheckInRecordRes(CheckInRecord checkInRecord)
         {
-            FullName = checkInRecord.ApplicationUser.FullName;
+            FullName = checkInRecord.ApplicationUser?.FullName;
             Id = checkInRecord.CheckInRecordId.ToString();
             Date = checkInRecord.Date?.ToString("dd/MM/yyyy hh:mm tt");
             CheckInTime = checkInRecord.CheckInTime?.ToString("dd/MM/yyyy hh:mm tt");

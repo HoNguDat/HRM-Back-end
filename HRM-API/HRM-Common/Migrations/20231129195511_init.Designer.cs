@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRM_Common.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231129171537_init")]
+    [Migration("20231129195511_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace HRM_Common.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("FromDateMulti")
+                    b.Property<DateTime>("FromDateMulti")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FromDateSingle")
@@ -61,7 +61,7 @@ namespace HRM_Common.Migrations
                     b.Property<int>("ShiftTypeToDateMulti")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ToDateMulti")
+                    b.Property<DateTime>("ToDateMulti")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Type")
@@ -356,14 +356,9 @@ namespace HRM_Common.Migrations
                     b.Property<double?>("MinutesLate")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("PayrollId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CheckInRecordId");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("PayrollId");
 
                     b.ToTable("CheckInRecords");
                 });
@@ -713,10 +708,6 @@ namespace HRM_Common.Migrations
                         .WithMany("CheckInRecords")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("HRM_Common.Models.Payroll", null)
-                        .WithMany("CheckInRecords")
-                        .HasForeignKey("PayrollId");
-
                     b.Navigation("ApplicationUser");
                 });
 
@@ -826,11 +817,6 @@ namespace HRM_Common.Migrations
                     b.Navigation("ApplicationUsers");
 
                     b.Navigation("Positions");
-                });
-
-            modelBuilder.Entity("HRM_Common.Models.Payroll", b =>
-                {
-                    b.Navigation("CheckInRecords");
                 });
 
             modelBuilder.Entity("HRM_Common.Models.Position", b =>
