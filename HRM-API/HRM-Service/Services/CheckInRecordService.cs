@@ -105,7 +105,7 @@ namespace HRM_Service.Services
             var checkInRecord = await _context.CheckInRecords.Include(p => p.ApplicationUser).AsQueryable().FirstOrDefaultAsync(c => c.Date == date && c.EmployeeId == employeeId);
             if (checkInRecord == null)
             {
-                return null;
+                throw new Exception("Hãy nhớ check-in nhé");
             }
             return checkInRecord;
         }

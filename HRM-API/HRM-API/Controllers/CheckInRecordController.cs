@@ -68,8 +68,16 @@ namespace HRM_API.Controllers
         public async Task<IActionResult> GetCheckInRecordByIdUser([FromQuery]DateTime? date,[FromQuery] string employeeId)
 
         {
+            try
+            {
                 var data = await _checkInRecordService.GetCheckInRecordByDate(date, employeeId);
-                return Ok (data);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { Message = ex.Message.ToString() });
+            }
+           
         }
 
         [HttpPost]
